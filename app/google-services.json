@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "467874820782",
+    "firebase_url": "https://dexapp-40dc3.firebaseio.com",
+    "project_id": "dexapp-40dc3",
+    "storage_bucket": "dexapp-40dc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467874820782:android:b7f7c3222af9b1d7",
+        "android_client_info": {
+          "package_name": "com.dexterlearning.dexapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467874820782-hvp2hke6603s72timjdcvimksvbuc9l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dexterlearning.dexapp",
+            "certificate_hash": "60c98a99b78ec08f3ef3fbd25d751ba38e730648"
+          }
+        },
+        {
+          "client_id": "467874820782-b98oc8ut3dvthc5sc8d8d9rln15k4glg.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "467874820782-b98oc8ut3dvthc5sc8d8d9rln15k4glg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiMYUIjyrKZNx2r-rucsuxBK7dN2eFjFk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467874820782-b98oc8ut3dvthc5sc8d8d9rln15k4glg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

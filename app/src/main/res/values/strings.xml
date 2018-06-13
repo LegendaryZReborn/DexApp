@@ -2,6 +2,7 @@
     <string name="app_name">DexApp</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_course">View Course</string>
+    <string name="title_activity_portfolio">Portfolio</string>
 
 
     <!-- Strings related to login -->
