@@ -2,8 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:foreground="@drawable/custom_ripple_border"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/lr_cbCheck"
@@ -11,18 +17,19 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/lr_ivFileIcon"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:focusable="false" />
 
     <ImageView
         android:id="@+id/lr_ivFileIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/lr_cbCheck"
-        android:src="@drawable/ic_launcher_foreground"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher_foreground" />
 
     <TextView
         android:id="@+id/lr_tvFileName"
@@ -30,9 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/lr_ivFileIcon"
-        android:text="TextView"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:text="TextView"
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/lr_tvdate"
@@ -41,8 +49,9 @@
         android:layout_below="@+id/lr_tvFileName"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/lr_ivFileIcon"
-        android:text="TextView"
+        android:clickable="false"
         android:focusable="false"
-        android:clickable="false" />
+        android:text="TextView"
+        android:textSize="24sp"/>
 
 </RelativeLayout>

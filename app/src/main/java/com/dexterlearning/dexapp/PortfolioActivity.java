@@ -15,8 +15,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.PermissionRequest;
 import android.widget.AdapterView;
@@ -36,11 +39,14 @@ public class PortfolioActivity extends AppCompatActivity {
 
     private final int REQUEST_PERMISSION_READ_WRITE_EXTERNAL_STORAGE=1;
     private String m_root= Environment.getExternalStorageDirectory().getPath();
-    ArrayList<String> m_item, m_path, m_files, m_filesPath;
-    String m_curDir;
-    ListAdapter m_listAdapter;
+    private ArrayList<String> m_item, m_path, m_files, m_filesPath;
+    private String m_curDir;
+    private ListAdapter m_listAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    boolean selectMode;
 
-    ListView m_RootList;
+    //ListView m_RootList;
+    RecyclerView m_RootList;
     ImageButton btnNewFile;
     ImageButton btnDeleteFile;
 
@@ -49,9 +55,15 @@ public class PortfolioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.portfolio_activity);
 
-        m_RootList = (ListView) findViewById(R.id.rl_lvListRoot);
+        selectMode = false;
+        m_RootList = (RecyclerView) findViewById(R.id.rvListRoot);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        m_RootList.setHasFixedSize(false);
+
         btnNewFile = (ImageButton) findViewById(R.id.btnNewFile);
         btnDeleteFile = (ImageButton) findViewById(R.id.btnDeleteFile);
+
 
         btnNewFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,78 +99,131 @@ public class PortfolioActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        boolean grantedAll = true;
-        for(int i = 0; i < grantResults.length; ++i){
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                grantedAll = false;
+        //Check if both read and write permissions were granted, then call getDirFromRoot
+        if(requestCode == REQUEST_PERMISSION_READ_WRITE_EXTERNAL_STORAGE){
+            boolean grantedAll = true;
+            for(int i = 0; i < grantResults.length; ++i){
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    grantedAll = false;
+                }
+            }
+
+            if(grantedAll){
+                getDirFromRoot(m_root);
             }
         }
+    }
 
-        if(grantedAll){
-            getDirFromRoot(m_root);
+    @Override
+    public void onBackPressed() {
+        if(!selectMode)
+            super.onBackPressed();
+        else{
+            selectMode = false;
+            deselectAll();
         }
     }
 
     //get directories and files from selected path
-    public void getDirFromRoot(String p_rootPath){
+    public void getDirFromRoot(String p_rootPath) {
         m_item = new ArrayList<String>();
-        Boolean m_isRoot=true;
+        Boolean m_isRoot = true;
         m_path = new ArrayList<String>();
-        m_files=new ArrayList<String>();
-        m_filesPath=new ArrayList<String>();
+        m_files = new ArrayList<String>();
+        m_filesPath = new ArrayList<String>();
         File m_file = new File(p_rootPath);
         File[] m_filesArray = m_file.listFiles();
-        if(!p_rootPath.equals(m_root))
-        {
+        if (!p_rootPath.equals(m_root)) {
             m_item.add("../");
             m_path.add(m_file.getParent());
-            m_isRoot=false;
+            m_isRoot = false;
         }
-        m_curDir=p_rootPath;
+        m_curDir = p_rootPath;
         //sorting file list in alphabetical order
         Arrays.sort(m_filesArray);
-        for(int i=0; i < m_filesArray.length; i++)
-        {
+        for (int i = 0; i < m_filesArray.length; i++) {
             File file = m_filesArray[i];
-            if(file.isDirectory())
-            {
+            if (file.isDirectory()) {
                 m_item.add(file.getName());
                 m_path.add(file.getPath());
-            }
-            else
-            {
+            } else {
                 m_files.add(file.getName());
                 m_filesPath.add(file.getPath());
             }
         }
-        for(String m_AddFile:m_files)
-        {
+        for (String m_AddFile : m_files) {
             m_item.add(m_AddFile);
         }
-        for(String m_AddPath:m_filesPath)
-        {
+        for (String m_AddPath : m_filesPath) {
             m_path.add(m_AddPath);
         }
-        m_listAdapter =new ListAdapter(this,m_item,m_path,m_isRoot);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        m_RootList.setLayoutManager(mLayoutManager);
+
+        m_listAdapter = new ListAdapter(this, m_item, m_path, m_isRoot);
         m_RootList.setAdapter(m_listAdapter);
-        m_RootList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        m_RootList.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                View view = rv.findChildViewUnder(e.getX(), e.getY());
+
+                //onIntercept is called each time for ACTION_UP, ACTION_DOWN, ACTION_MOVE,
+                //so to ensure code gets called once, check the action
+                if(view != null && e.getAction() == MotionEvent.ACTION_UP) {
+                    long heldTime = e.getEventTime() - e.getDownTime();
+                    //Log.e("The time held down is: ", Long.toString(heldTime));
+                    int position = rv.getChildAdapterPosition(view);
+
+                    //Activate select mode if held down for 4 seconds or more
+                    if(heldTime >= 500) {
+                        Log.e("Selecting item at pos ", Integer.toString(position));
+                        selectMode = true;
+                    }
+
+                    File m_isFile = new File(m_path.get(position));
+                    if(selectMode){
+                        ListAdapter.ViewHolder vhItem =
+                                (ListAdapter.ViewHolder) rv.findViewHolderForAdapterPosition(position);
+                        vhItem.m_cbCheck.setChecked(!vhItem.m_cbCheck.isChecked());
+
+                        if(m_listAdapter.m_selectedItem.size() == 0)
+                            selectMode = false;
+                    }
+                    else if (m_isFile.isDirectory()) {
+                        Toast.makeText(PortfolioActivity.this, "This is Directory", Toast.LENGTH_SHORT).show();
+                        getDirFromRoot(m_isFile.toString());
+                    } else {
+                        Toast.makeText(PortfolioActivity.this, "This is File", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                return true;
+            }
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                File m_isFile=new File(m_path.get(position));
-                if(m_isFile.isDirectory())
-                {
-                    getDirFromRoot(m_isFile.toString());
-                }
-                else
-                {
-                    Toast.makeText(PortfolioActivity.this, "This is File", Toast.LENGTH_SHORT).show();
-                }
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+
             }
         });
     }
 
+    private void deselectAll(){
+        ArrayList<Integer> new_selectItems = (ArrayList<Integer>) m_listAdapter.m_selectedItem.clone();
+
+        for (int pos : new_selectItems){
+            ListAdapter.ViewHolder vhItem =
+                    (ListAdapter.ViewHolder)m_RootList.findViewHolderForAdapterPosition(pos);
+            vhItem.m_cbCheck.setChecked(false);
+        }
+    }
     //Method to delete selected files (Not used yet)
     private void deleteFile() {
         for(int m_delItem : m_listAdapter.m_selectedItem)
@@ -169,6 +234,10 @@ public class PortfolioActivity extends AppCompatActivity {
             Toast.makeText(PortfolioActivity.this, "File(s) Deledted", Toast.LENGTH_SHORT).show();
             getDirFromRoot(m_curDir);
         }
+
+        /*after selected files are deleted, exit select mode
+         */
+        selectMode = false;
     }
 
     private void createNewFolder( final int p_opt){
