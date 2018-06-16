@@ -186,6 +186,9 @@ public class PortfolioActivity extends AppCompatActivity {
                     if(selectMode){
                         ListAdapter.ViewHolder vhItem =
                                 (ListAdapter.ViewHolder) rv.findViewHolderForAdapterPosition(position);
+
+                        //TODO:Fix deselecting bug (Items on second level deselects on selects)
+                        //TODO:Figure out how to focus selected items
                         vhItem.m_cbCheck.setChecked(!vhItem.m_cbCheck.isChecked());
 
                         if(m_listAdapter.m_selectedItem.size() == 0)
@@ -199,7 +202,7 @@ public class PortfolioActivity extends AppCompatActivity {
                     }
 
                 }
-                return true;
+                return false;
             }
 
             @Override
