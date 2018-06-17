@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.media.Image;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -43,7 +44,8 @@ public class PortfolioActivity extends AppCompatActivity {
     private String m_curDir;
     private ListAdapter m_listAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    boolean selectMode;
+    private Handler mHandler;
+    private boolean selectMode, justSelected;
 
     //ListView m_RootList;
     RecyclerView m_RootList;
@@ -171,38 +173,68 @@ public class PortfolioActivity extends AppCompatActivity {
 
                 //onIntercept is called each time for ACTION_UP, ACTION_DOWN, ACTION_MOVE,
                 //so to ensure code gets called once, check the action
-                if(view != null && e.getAction() == MotionEvent.ACTION_UP) {
-                    long heldTime = e.getEventTime() - e.getDownTime();
-                    //Log.e("The time held down is: ", Long.toString(heldTime));
+                if(view != null) {
                     int position = rv.getChildAdapterPosition(view);
 
-                    //Activate select mode if held down for 4 seconds or more
-                    if(heldTime >= 500) {
-                        Log.e("Selecting item at pos ", Integer.toString(position));
-                        selectMode = true;
+                    switch (e.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            if (mHandler != null)
+                                return false;
+                            mHandler = new Handler();
+                            mHandler.postDelayed(createRunnable(rv, position), 1000);
+
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            if (mHandler != null) {
+                                mHandler.removeCallbacksAndMessages(null);
+                                mHandler = null;
+                            }
+
+                            //TODO:Fix select mode bug, detoggles on action up
+                            if(selectMode) {
+                                if(!justSelected)
+                                    selectItem(rv, position);
+
+                                justSelected = false;
+                            }
+                            else{
+                                File m_isFile = new File(m_path.get(position));
+                                if (m_isFile.isDirectory()) {
+                                    justSelected = false;
+                                    Toast.makeText(PortfolioActivity.this, "This is Directory", Toast.LENGTH_SHORT).show();
+                                    getDirFromRoot(m_isFile.toString());
+                                } else {
+                                    Toast.makeText(PortfolioActivity.this, "This is File", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            break;
                     }
-
-                    File m_isFile = new File(m_path.get(position));
-                    if(selectMode){
-                        ListAdapter.ViewHolder vhItem =
-                                (ListAdapter.ViewHolder) rv.findViewHolderForAdapterPosition(position);
-
-                        //TODO:Fix deselecting bug (Items on second level deselects on selects)
-                        //TODO:Figure out how to focus selected items
-                        vhItem.m_cbCheck.setChecked(!vhItem.m_cbCheck.isChecked());
-
-                        if(m_listAdapter.m_selectedItem.size() == 0)
-                            selectMode = false;
-                    }
-                    else if (m_isFile.isDirectory()) {
-                        Toast.makeText(PortfolioActivity.this, "This is Directory", Toast.LENGTH_SHORT).show();
-                        getDirFromRoot(m_isFile.toString());
-                    } else {
-                        Toast.makeText(PortfolioActivity.this, "This is File", Toast.LENGTH_SHORT).show();
-                    }
-
                 }
+
                 return false;
+            }
+
+            void selectItem(RecyclerView touchedRv,int position){
+                ListAdapter.ViewHolder vhItem =
+                        (ListAdapter.ViewHolder) touchedRv.findViewHolderForAdapterPosition(position);
+
+                //TODO:Fix deselecting bug (Items on second level deselects on selects)
+                //TODO:Figure out how to focus selected items
+                vhItem.m_cbCheck.setChecked(!vhItem.m_cbCheck.isChecked());
+            }
+
+            Runnable createRunnable(final RecyclerView touchedRv, final int position) {
+                Runnable mAction = new Runnable() {
+                    @Override
+                    public void run() {
+                        //Activate select mode if held down for some time
+                        selectItem(touchedRv, position);
+                        selectMode = true;
+                        justSelected = true;
+                    }
+                };
+                return mAction;
             }
 
             @Override
