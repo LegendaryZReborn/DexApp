@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="145dp"
+    android:layout_height="230dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="15dp">
@@ -9,8 +9,9 @@
     <ImageView
         android:id="@+id/imgvCourseImg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="4"
         android:background="@drawable/circlebackground"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/ic_apps_black_24dp" />
@@ -18,14 +19,17 @@
     <TextView
         android:id="@+id/tvCourseTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
         android:ellipsize="end"
-        android:gravity="center"
+        android:gravity="left"
         android:maxLines="2"
         android:scrollHorizontally="true"
         android:text="TextView"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textColor="@color/primaryText"
+        android:textSize="20sp" />
 
 </LinearLayout>
 

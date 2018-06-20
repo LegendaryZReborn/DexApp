@@ -6,32 +6,39 @@ import java.util.Date;
 
 @IgnoreExtraProperties
 public class Course {
-    String name;
-    Object date;
-    String url;
+    private String name;
+    private String pdf;
+    private int rating;
+    private String year;
 
     public Course(){
     }
 
-    public Course(String name, Object date, String url){
+    public Course(String name, String pdf) {
         this.name = name;
-        this.date = date;
-        this.url = url;
+        this.pdf = pdf;
+    }
+
+    public Course(String name, String pdf, int rating, String year) {
+        this.name = name;
+        this.pdf = pdf;
+        this.rating = rating;
+        this.year = year;
     }
 
     public String getName() {
         return name;
     }
 
-    public Object getDate() {
-        return date	;
+    public String getPdf() {
+        return pdf;
     }
 
-    public long getDateLong(){
-        return (long)date;
+    public int getRating() {
+        return rating;
     }
 
-    public String getUrl() {
-        return url;
+    public String getYear() {
+        return year;
     }
 }

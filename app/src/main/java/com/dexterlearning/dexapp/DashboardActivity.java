@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -47,24 +48,22 @@ public class DashboardActivity extends AppCompatActivity {
     TextView tvUserName;
     TextView tvTitle;
     Toolbar toolbar;
-    int width, height;
     FirebaseFirestore db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-         db = FirebaseFirestore.getInstance();
-
-        //TODO: Take user's name or username and other data to configure dashboard
+        //TODO:Save username so it persists between activities
         String userName = getIntent().getStringExtra("user");
+        if(userName == null)
+            userName = "null";
         tvUserName = (TextView) findViewById(R.id.tvUserName);
-        userName = "acrenshaw";
         tvUserName.setText(userName);
 
         //Test firebase firestore
+        db = FirebaseFirestore.getInstance();
         getUserData(userName);
         getUserCourses(userName);
 
@@ -73,8 +72,7 @@ public class DashboardActivity extends AppCompatActivity {
                 "https://www.dexterlearning.com/minecraft", "https://www.udemy.com/learn-and-master-computer-aided-design-cad-with-tinkercad/"});
         List<String> courseNames = Arrays.asList(new String[]{"Python", "Scratch", "Minecraft 3D Printing", "TinkerCAD"});
 
-        createRecommended();
-        createPersonalLibrary(courseNames, courseUrls);
+        getUsersRecommended();
     }
 
     private int toPixels(int value){
@@ -115,12 +113,17 @@ public class DashboardActivity extends AppCompatActivity {
                         if (d.exists()) {
                             course = d.toObject(Course.class);
                             courses.add(course);
-
-                            //TODO:Pass course information to function to create library
                         } else {
                             Log.e("Error: ", "Unable to get user course data");
                         }
                     }
+                    //TODO:Pass course information to function to create library
+                    libraryLayout = (LinearLayout) findViewById(R.id.libraryLayout);
+                    for(int i = 0; i < courses.size(); ++i){
+                        CardView courseItem = createCourseItem(courses.get(i));
+                        libraryLayout.addView(courseItem);
+                    }
+
                 }else{
                     Log.e("Error: ", "Task unsuccessful");
 
@@ -130,31 +133,22 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-    private void createPersonalLibrary(List<String> courseNames, List<String> courseUrls){
-        libraryLayout = (LinearLayout) findViewById(R.id.libraryLayout);
-
-        for(int i = 0; i < courseNames.size(); ++i){
-            CardView courseItem = createCourseItem(courseNames.get(i), courseUrls.get(i));
-            libraryLayout.addView(courseItem);
-
-        }
-    }
-
-
-    private void createRecommended(){
+    //TODO:create algorithm to selected recommended courses in order of most to least
+    private void getUsersRecommended(){
         recommendedLayout = (LinearLayout) findViewById(R.id.recommendedLayout);
-
         for(int i = 0; i < 5; ++i){
-            recommendedLayout.addView(createCourseItem("Course Title AND There she blows down the hole",
-                    "https://www.google.com"));
+            Course course = new Course("New Course", "");
+            CourseCardView courseItem = createCourseItem(course);
+            recommendedLayout.addView(courseItem);
         }
     }
 
-    private CourseCardView createCourseItem(final String title, final String url){
+    private CourseCardView createCourseItem(Course course){
         Context context = DashboardActivity.this;
-        CourseCardView courseItem = new CourseCardView(DashboardActivity.this, title, url);
+        CourseCardView courseItem = new CourseCardView(DashboardActivity.this, course.getName(), course.getPdf());
 
         return courseItem;
 
     }
+
 }

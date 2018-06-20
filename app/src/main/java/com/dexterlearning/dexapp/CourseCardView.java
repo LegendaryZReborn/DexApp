@@ -1,5 +1,6 @@
 package com.dexterlearning.dexapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -19,12 +20,12 @@ public class CourseCardView extends CardView {
 
     Context context;
 
-    public CourseCardView(Context context, String title, String url){
+    public CourseCardView(Context context, String title, String pdfFileName){
         super(context);
         this.context = context;
-        this.setLayoutParams(new ViewGroup.LayoutParams(toPixels(110),
-               toPixels(160)));
-        initialize(title, url);
+        this.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        initialize(title, pdfFileName);
     }
 
 
@@ -33,7 +34,7 @@ public class CourseCardView extends CardView {
         return (int)(value * factor);
     }
 
-    private void initialize(final String title, final String url){
+    private void initialize(final String title, final String pdfFileName){
 
         this.setClickable(true);
         this.setForeground(getResources().getDrawable(R.drawable.custom_ripple_border));
@@ -42,8 +43,13 @@ public class CourseCardView extends CardView {
             public void onClick(View v) {
                 Intent intent = new Intent(context,
                         com.dexterlearning.dexapp.CourseActivity.class);
-                intent.putExtra("url", url);
+
+                View rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
+                TextView tvUserName = (TextView) rootView.findViewById(R.id.tvUserName);
+
                 intent.putExtra("title", title);
+                intent.putExtra("file", pdfFileName);
+                intent.putExtra("user", tvUserName.getText().toString());
 
                 context.startActivity(intent);
             }
@@ -51,7 +57,7 @@ public class CourseCardView extends CardView {
 
 
         LayoutInflater lInflator = LayoutInflater.from(context);
-        LinearLayout linearLayout = (LinearLayout) lInflator.inflate(R.layout.course_item, null);
+        LinearLayout linearLayout = (LinearLayout) lInflator.inflate(R.layout.course_item, this, false);
 
         //Set course image and title dynamically
         ImageView courseImage = (ImageView) linearLayout.findViewById(R.id.imgvCourseImg);
