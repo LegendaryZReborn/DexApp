@@ -6,17 +6,23 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     Button signinButton;
     Button registerButton;
+    Toolbar toolbar;
+    TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_activity);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.title_activity_welcome);
 
         signinButton = (Button) findViewById(R.id.signinButton1);
         registerButton = (Button) findViewById(R.id.registerButton1);

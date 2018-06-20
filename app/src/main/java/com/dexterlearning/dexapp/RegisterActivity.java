@@ -53,12 +53,18 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Toolbar toolbar;
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.title_activity_register);
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);

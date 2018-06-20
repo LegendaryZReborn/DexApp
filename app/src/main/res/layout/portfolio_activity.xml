@@ -48,8 +48,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="20dp"
                 android:contentDescription="Dexter Logo"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/dextor_logo_white_vector" />
+                android:scaleType="fitXY" />
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

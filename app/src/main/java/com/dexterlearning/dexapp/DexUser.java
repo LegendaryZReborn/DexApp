@@ -2,41 +2,48 @@ package com.dexterlearning.dexapp;
 
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+
+@IgnoreExtraProperties
 public class DexUser {
     private String name;
-    private ArrayList<Course> enrolledCourses;
+    private String address;
+    private String email;
+    private String password;
+    private String notes;
 
     public DexUser(){
-        name = "";
-        enrolledCourses = new ArrayList<Course>();
+
     }
 
-    public DexUser(String userName) {
-        name = userName;
-        enrolledCourses = new ArrayList<Course>();
+    public DexUser(String name, String address,
+                   String email, String password, String notes){
+        this.name = name;
+        this.address =  address;
+        this.email = email;
+        this.password = password;
+        this.notes = notes;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void addEnrolledCourse(Course course){
-        enrolledCourses.add(course);
+    public String getAddress() {
+        return address;
     }
 
-    public Course getEnrolledCourse(int i){
-        try{
-           Course c = enrolledCourses.get(i);
-        }catch(IndexOutOfBoundsException ex) {
-            Log.e("IndexOutofBounds: ", "Course index does not exist.");
-        }finally {
-            return new Course();
-        }
+    public String getEmail() {
+        return email;
     }
 
-    public int numEnrolledCourses(){
-        return enrolledCourses.size();
+    public String getPassword() {
+        return password;
     }
+
+    public String getNotes() {
+        return notes;
+    }
+
 }

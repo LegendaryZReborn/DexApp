@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "467874820782",
-    "firebase_url": "https://dexapp-40dc3.firebaseio.com",
-    "project_id": "dexapp-40dc3",
-    "storage_bucket": "dexapp-40dc3.appspot.com"
+    "project_number": "411529256654",
+    "firebase_url": "https://dexterdata-e5352.firebaseio.com",
+    "project_id": "dexterdata-e5352",
+    "storage_bucket": "dexterdata-e5352.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:467874820782:android:b7f7c3222af9b1d7",
+        "mobilesdk_app_id": "1:411529256654:android:b7f7c3222af9b1d7",
         "android_client_info": {
           "package_name": "com.dexterlearning.dexapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "467874820782-hvp2hke6603s72timjdcvimksvbuc9l0.apps.googleusercontent.com",
+          "client_id": "411529256654-b6iq3vo8b6i4stdhb59tpqdriom2e513.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dexterlearning.dexapp",
@@ -23,17 +23,17 @@
           }
         },
         {
-          "client_id": "467874820782-b98oc8ut3dvthc5sc8d8d9rln15k4glg.apps.googleusercontent.com",
+          "client_id": "411529256654-aicm2nrm0fhed5nasa7ucu580l1jsm5q.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "467874820782-b98oc8ut3dvthc5sc8d8d9rln15k4glg.apps.googleusercontent.com",
+          "client_id": "411529256654-aicm2nrm0fhed5nasa7ucu580l1jsm5q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAiMYUIjyrKZNx2r-rucsuxBK7dN2eFjFk"
+          "current_key": "AIzaSyBhRIwkMBCbLE60fnFECYjSM9A7FhTgJNo"
         }
       ],
       "services": {
@@ -44,7 +44,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "467874820782-b98oc8ut3dvthc5sc8d8d9rln15k4glg.apps.googleusercontent.com",
+              "client_id": "411529256654-aicm2nrm0fhed5nasa7ucu580l1jsm5q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

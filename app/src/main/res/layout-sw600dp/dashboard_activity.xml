@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dashboard_layout"
+    android:id="@+id/dashboard_layout_sw600dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/subtleGrey"
     android:orientation="vertical"
     tools:context=".DashboardActivity">
 
+
+    <include layout="@layout/custom_toolbar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -22,65 +23,84 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/profileCardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="@string/card_title_profile"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/medium_heading"
+                        android:textStyle="bold" />
+
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/profileLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
                         android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imgvProfile"
-                            android:layout_width="135dp"
-                            android:layout_height="142dp"
+                            android:layout_width="180dp"
+                            android:layout_height="200dp"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="4dp"
                             android:layout_marginTop="8dp"
                             android:contentDescription="@string/profile_image"
-                            app:layout_constraintBottom_toTopOf="@+id/tvUserName"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_profile"
+                            app:srcCompat="@mipmap/ic_launcher"
                             tools:layout_conversion_absoluteHeight="72dp"
                             tools:layout_conversion_absoluteWidth="364dp" />
 
                         <TextView
                             android:id="@+id/tvUserName"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
+                            android:layout_width="373dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="1dp"
-                            android:autoSizeTextType="uniform"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:text="legendaryZ07"
-                            android:textColor="@color/primaryText"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/xlarge_heading"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgvProfile" />
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/imgvProfile"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
                     </android.support.constraint.ConstraintLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -91,12 +111,10 @@
                         android:id="@+id/cardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="15dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="15dp"
+                        android:padding="5dp"
                         android:text="@string/card_title_recommendations"
-                        android:textColor="@color/primaryText"
-                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/medium_heading"
                         android:textStyle="bold" />
 
                     <HorizontalScrollView
@@ -110,47 +128,44 @@
                             android:focusableInTouchMode="false"
                             android:orientation="horizontal">
 
+
                         </LinearLayout>
                     </HorizontalScrollView>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/libraryCardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="15dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="15dp"
+                        android:padding="5dp"
                         android:text="@string/card_title_library"
-                        android:textColor="@color/primaryText"
-                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/medium_heading"
                         android:textStyle="bold" />
 
-                    <HorizontalScrollView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                    <TableLayout
+                        android:id="@+id/libraryTableLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <LinearLayout
-                            android:id="@+id/libraryLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" />
-                    </HorizontalScrollView>
-
+                    </TableLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
