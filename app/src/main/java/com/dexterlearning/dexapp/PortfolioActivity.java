@@ -7,7 +7,6 @@ package com.dexterlearning.dexapp;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -22,11 +21,8 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.PermissionRequest;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -42,7 +38,7 @@ public class PortfolioActivity extends AppCompatActivity {
     private String m_root= Environment.getExternalStorageDirectory().getPath();
     private ArrayList<String> m_item, m_path, m_files, m_filesPath;
     private String m_curDir;
-    private ListAdapter m_listAdapter;
+    private PortfolioRecyclerAdapter m_listAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Handler mHandler;
     private boolean selectMode, justSelected;
@@ -55,7 +51,7 @@ public class PortfolioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.portfolio_activity);
+        setContentView(R.layout.activity_portfolio);
 
         selectMode = false;
         m_RootList = (RecyclerView) findViewById(R.id.rvListRoot);
@@ -164,7 +160,7 @@ public class PortfolioActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         m_RootList.setLayoutManager(mLayoutManager);
 
-        m_listAdapter = new ListAdapter(this, m_item, m_path, m_isRoot);
+        m_listAdapter = new PortfolioRecyclerAdapter(this, m_item, m_path, m_isRoot);
         m_RootList.setAdapter(m_listAdapter);
         m_RootList.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
@@ -216,8 +212,8 @@ public class PortfolioActivity extends AppCompatActivity {
             }
 
             void selectItem(RecyclerView touchedRv,int position){
-                ListAdapter.ViewHolder vhItem =
-                        (ListAdapter.ViewHolder) touchedRv.findViewHolderForAdapterPosition(position);
+                PortfolioRecyclerAdapter.ViewHolder vhItem =
+                        (PortfolioRecyclerAdapter.ViewHolder) touchedRv.findViewHolderForAdapterPosition(position);
 
                 //TODO:Fix deselecting bug (Items on second level deselects on selects)
                 //TODO:Figure out how to focus selected items
@@ -254,8 +250,8 @@ public class PortfolioActivity extends AppCompatActivity {
         ArrayList<Integer> new_selectItems = (ArrayList<Integer>) m_listAdapter.m_selectedItem.clone();
 
         for (int pos : new_selectItems){
-            ListAdapter.ViewHolder vhItem =
-                    (ListAdapter.ViewHolder)m_RootList.findViewHolderForAdapterPosition(pos);
+            PortfolioRecyclerAdapter.ViewHolder vhItem =
+                    (PortfolioRecyclerAdapter.ViewHolder)m_RootList.findViewHolderForAdapterPosition(pos);
             vhItem.m_cbCheck.setChecked(false);
         }
     }

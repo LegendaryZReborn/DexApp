@@ -1,108 +1,99 @@
 package com.dexterlearning.dexapp;
 
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.view.LayoutInflaterCompat;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.util.FileUtils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class CourseActivity extends AppCompatActivity {
-    private TextView tvTitle;
+public class CourseActivity extends AppCompatActivity
+    implements StudentListFragment.OnFragmentInteractionListener{
+
     private Toolbar toolbar;
-    private PDFView pdfView;
+    private TextView tvTitle;
+    private ViewPager vpCourseView;
+    private TabLayout tabLayout;
+    private CustomPagerAdapter cVAdapter;
 
-    private StorageReference mStorageRef;
+    private String [] students = new String []{"John Doe", "Mya Komeada",
+            "Alexis Voltair", "Caroline Wilhelmina", "Osmosis Jones",
+            "Caleb Brown", "Alice Nano", "Sir Victoreeem", "Sakure The Beautifuru",
+            "Snoop Dog", "G Lite 10", "Mr.Tough Guy", "Mr. Nice Guy"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.course_activity);
-
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        setContentView(R.layout.activity_course);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String title = getIntent().getStringExtra("title");
+        if(title == null){
+            title = "Course View";
+        }
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(title);
 
-        String pdfFileName = getIntent().getStringExtra("file");
-        pdfView = (PDFView) findViewById(R.id.pdfView);
-        loadCoursePdf(pdfFileName);
+        vpCourseView = (ViewPager) findViewById(R.id.vpCourseView);
+        cVAdapter = new CustomPagerAdapter(getSupportFragmentManager());
+        cVAdapter.addFragment(CourseContentFragment.newInstance("Content Fragment"), "Content");
+        cVAdapter.addFragment(CourseContentFragment.newInstance("Notes Fragment"), "Notes");
+        cVAdapter.addFragment(StudentsFragment.newInstance("Students Fragment"), "Students");
+        cVAdapter.addFragment(CourseContentFragment.newInstance("Forum Fragment"), "Forum");
+        vpCourseView.setAdapter(cVAdapter);
+
+        tabLayout = (TabLayout) findViewById(R.id.tlDashboardTabs);
+        tabLayout.setupWithViewPager(vpCourseView);
+
+        createTabIcon("Content", R.drawable.ic_library_books_white_24dp, 0);
+        createTabIcon("Notes", R.drawable.ic_note_white_24dp, 1);
+        createTabIcon("Students", R.drawable.ic_group_white_24dp, 2);
+        createTabIcon("Forum", R.drawable.ic_forum_white_24dp, 3);
+
+
     }
 
-    private void loadCoursePdf(String pdfFileName) {
-        mStorageRef.child("courses/" + pdfFileName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                File localFile = null;
-                // Use the bytes to display the image
-                try {
-                    localFile = File.createTempFile("temp", ".pdf");
-                    String absPath = localFile.getAbsolutePath();
-                    com.google.common.io.Files.write(bytes, localFile);
+    public void onFragmentInteraction(int position) {
+        //TODO:Change data on student profile to the correct student and show profile
+        //Read student's data from firestore
+        //Populate student profile fragment with data
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        TextView tvProfileName = (TextView) findViewById(R.id.tvUserName);
+        tvProfileName.setText(students[position]);
 
-                if(localFile != null) {
-                    pdfView.fromFile(localFile)
-                            .enableSwipe(true) // allows to block changing pages using swipe
-                            .swipeHorizontal(false)
-                            .enableDoubletap(true)
-                            .defaultPage(0)
-                            .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
-                            .password(null)
-                            .scrollHandle(null)
-                            .enableAntialiasing(true) // improve rendering a little bit on low-res screens
-                            // spacing between pages in dp. To define spacing color, set view background
-                            .spacing(0)
-                            .load();
+        if (findViewById(R.id.activity_course_port) != null) {
+            FragmentManager manager = getSupportFragmentManager();
+
+            for(Fragment f : manager.getFragments()){
+                LabeledFragment lFragment = (LabeledFragment) f;
+                if((lFragment.getLabel() == "STUDENTS_FRAG")){
+
+                    FragmentManager childManager = lFragment
+                            .getChildFragmentManager();
+
+                    childManager.beginTransaction()
+                            .hide(childManager.findFragmentById(R.id.sl_frag))
+                            .show(childManager.findFragmentById(R.id.sp_frag))
+                            .addToBackStack(null)
+                            .commit();
+                    return;
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                //TODO:HANDLE THIS
-            }
-        });
+        }
     }
 
     @Override
@@ -110,11 +101,7 @@ public class CourseActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                Intent intent = new Intent(CourseActivity.this,
-                        com.dexterlearning.dexapp.DashboardActivity.class);
-                intent.putExtra("user", getIntent().getStringExtra("user"));
-                startActivity(intent);
-                finish();
+               onBackPressed();
                 return true;
         }
 
@@ -123,11 +110,32 @@ public class CourseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CourseActivity.this,
-                com.dexterlearning.dexapp.DashboardActivity.class);
-        intent.putExtra("user", getIntent().getStringExtra("user"));
-        startActivity(intent);
-        finish();
+       for(Fragment f : getSupportFragmentManager().getFragments()){
+           if(f.isVisible()){
+               FragmentManager childManager = f.getChildFragmentManager();
+               if(childManager.getBackStackEntryCount() > 0){
+                    childManager.popBackStack();
+                    return;
+               }
+           }
+        }
+
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+            getSupportFragmentManager().popBackStack();
+        }else {
+            Intent intent = new Intent(CourseActivity.this,
+                    com.dexterlearning.dexapp.DashboardActivity.class);
+            intent.putExtra("user", getIntent().getStringExtra("user"));
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    private void createTabIcon(String tabTitle, int drawable, int tabIndex) {
+        TextView tab = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_custom1, null);
+        tab.setText(tabTitle);
+        tab.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
+        tabLayout.getTabAt(tabIndex).setCustomView(tab);
     }
 
 /*
@@ -142,4 +150,5 @@ public class CourseActivity extends AppCompatActivity {
         return false;
     }
     */
+
 }

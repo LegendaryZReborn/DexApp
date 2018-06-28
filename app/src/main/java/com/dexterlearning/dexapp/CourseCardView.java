@@ -3,12 +3,9 @@ package com.dexterlearning.dexapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,7 +54,7 @@ public class CourseCardView extends CardView {
 
 
         LayoutInflater lInflator = LayoutInflater.from(context);
-        LinearLayout linearLayout = (LinearLayout) lInflator.inflate(R.layout.course_item, this, false);
+        LinearLayout linearLayout = (LinearLayout) lInflator.inflate(R.layout.item_course, this, false);
 
         //Set course image and title dynamically
         ImageView courseImage = (ImageView) linearLayout.findViewById(R.id.imgvCourseImg);
