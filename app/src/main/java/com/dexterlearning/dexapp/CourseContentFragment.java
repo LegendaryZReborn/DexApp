@@ -40,13 +40,12 @@ public class CourseContentFragment extends LabeledFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       /* mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         Activity activity = getActivity();
         String pdfFileName = activity.getIntent().getStringExtra("file");
         pdfFileName = "3D Printing Day 1.pdf";
-        pdfView = (PDFView) activity.findViewById(R.id.pdfView);
-        loadCoursePdf(pdfFileName);*/
+        loadCoursePdf(pdfFileName);
     }
 
     @Override
@@ -56,9 +55,11 @@ public class CourseContentFragment extends LabeledFragment {
         // properly.
         View rootView = inflater.inflate(
                 R.layout.fragment_course_content, container, false);
-        Bundle args = getArguments();
+        pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
+
+        /*Bundle args = getArguments();
         ((TextView) rootView.findViewById(R.id.text1)).setText(
-                args.getString("msg"));
+                args.getString("msg"));*/
         return rootView;
     }
 

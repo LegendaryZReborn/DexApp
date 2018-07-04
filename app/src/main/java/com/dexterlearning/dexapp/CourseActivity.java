@@ -20,7 +20,6 @@ import java.util.List;
 public class CourseActivity extends AppCompatActivity
     implements StudentListFragment.OnFragmentInteractionListener{
 
-    private Toolbar toolbar;
     private TextView tvTitle;
     private ViewPager vpCourseView;
     private TabLayout tabLayout;
@@ -37,11 +36,12 @@ public class CourseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
 
+        Toolbar toolbar;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String title = getIntent().getStringExtra("title");
+        String title = getIntent().getStringExtra("courseTitle");
         if(title == null){
             title = "Course View";
         }
@@ -124,7 +124,7 @@ public class CourseActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack();
         }else {
             Intent intent = new Intent(CourseActivity.this,
-                    com.dexterlearning.dexapp.DashboardActivity.class);
+                    com.dexterlearning.dexapp.InstructorDashboardActivity.class);
             intent.putExtra("user", getIntent().getStringExtra("user"));
             startActivity(intent);
             finish();

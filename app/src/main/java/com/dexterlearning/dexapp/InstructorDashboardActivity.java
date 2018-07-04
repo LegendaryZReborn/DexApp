@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,16 @@ public class InstructorDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_dashboard);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText("Dashboard");
+
         vpDashboard = (ViewPager) findViewById(R.id.vpDashboard);
         CustomPagerAdapter dpAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         dpAdapter.addFragment(DemoObjectFragment.newInstance("Home Fragment"), "Home");
-        dpAdapter.addFragment(DemoObjectFragment.newInstance("Courses Fragment"), "Courses");
+        dpAdapter.addFragment(InstructorCoursesFragment.newInstance("Courses Fragment"), "Courses");
         dpAdapter.addFragment(DemoObjectFragment.newInstance("Random Fragment"), "Random");
         dpAdapter.addFragment(DemoObjectFragment.newInstance("Settings Fragment"), "Settings");
         vpDashboard.setAdapter(dpAdapter);

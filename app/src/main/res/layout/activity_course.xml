@@ -8,12 +8,12 @@
     android:orientation="vertical"
     tools:context=".CourseActivity">
 
-    <include layout="@layout/toolbar_custom"/>
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_custom"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tlDashboardTabs"
