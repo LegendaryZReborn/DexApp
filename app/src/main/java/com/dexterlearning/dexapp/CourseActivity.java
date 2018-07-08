@@ -123,11 +123,7 @@ public class CourseActivity extends AppCompatActivity
         if(getSupportFragmentManager().getBackStackEntryCount() > 0){
             getSupportFragmentManager().popBackStack();
         }else {
-            Intent intent = new Intent(CourseActivity.this,
-                    com.dexterlearning.dexapp.InstructorDashboardActivity.class);
-            intent.putExtra("user", getIntent().getStringExtra("user"));
-            startActivity(intent);
-            finish();
+            super.onBackPressed();
         }
     }
 
