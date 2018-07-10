@@ -1,4 +1,4 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,6 +19,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.dexterlearning.dexapp.R;
 
 /**
  * A login screen that offers login via email/password.
@@ -241,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (success) {
                 //Go to sign in upon success
                 Intent intent = new Intent(RegisterActivity.this,
-                        com.dexterlearning.dexapp.LoginActivity.class);
+                        LoginActivity.class);
                 startActivity(intent);
                 finish();
             } else {

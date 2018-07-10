@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/subtleGrey"
 
-    tools:context=".StudentProfileFragment">
+    tools:context=".fragments.StudentProfileFragment">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

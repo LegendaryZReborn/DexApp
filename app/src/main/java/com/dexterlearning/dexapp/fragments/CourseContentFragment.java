@@ -1,23 +1,21 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.fragments;
 
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
+import com.dexterlearning.dexapp.models.LabeledFragment;
+import com.dexterlearning.dexapp.R;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -66,20 +64,7 @@ public class CourseContentFragment extends LabeledFragment {
         pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
-        /*Bundle args = getArguments();
-        ((TextView) rootView.findViewById(R.id.text1)).setText(
-                args.getString("msg"));*/
         return rootView;
-    }
-
-    public static Fragment newInstance(String title) {
-        CourseContentFragment f = new CourseContentFragment();
-        f.setLabel("COURSE_CONTENT_FRAG");
-        Bundle args = new Bundle();
-        args.putString("msg", title);
-        f.setArguments(args);
-
-        return f;
     }
 
     private void loadCoursePdf(String pdfFileName) {

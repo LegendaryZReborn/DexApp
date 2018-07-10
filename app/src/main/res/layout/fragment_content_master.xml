@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:nestedScrollingEnabled="true"
+    sothree:umanoPanelHeight="?attr/actionBarSize"
+    sothree:umanoShadowHeight="4dp"
+    sothree:umanoFadeColor="@android:color/transparent"
+    tools:context=".fragments.ContentMasterFragment">
+
+    <fragment
+        android:id="@+id/content_frag"
+        android:name="com.dexterlearning.dexapp.fragments.CourseContentFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <fragment
+        android:id="@+id/notes_frag"
+        android:name="com.dexterlearning.dexapp.fragments.CourseNotesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:gravity="center|top" />
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+

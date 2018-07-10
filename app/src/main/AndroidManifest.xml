@@ -20,43 +20,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".activities.WelcomeActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan">
+
+
+        </activity>
+
+
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:label="@string/title_activity_dashboard" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".activities.CourseActivity"
+            android:label="@string/title_activity_course">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
-            android:name=".DashboardActivity"
-            android:label="@string/title_activity_dashboard" />
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register" />
-        <activity
-            android:name=".CourseActivity"
-            android:label="@string/title_activity_course">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dexterlearning.dexapp.DashboardActivity" />
-
 
         </activity>
+
         <activity
-            android:name=".PortfolioActivity"
+            android:name=".activities.PortfolioActivity"
             android:label="@string/title_activity_portfolio" />
-        <activity android:name=".StudentsActivity">
+        <activity android:name=".activities.StudentsActivity">
 
         </activity>
-        <activity android:name=".InstructorDashboardActivity">
+        <activity android:name=".activities.InstructorDashboardActivity">
 
         </activity>
     </application>

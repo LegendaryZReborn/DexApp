@@ -1,4 +1,4 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.models;
 
 import android.util.Log;
 

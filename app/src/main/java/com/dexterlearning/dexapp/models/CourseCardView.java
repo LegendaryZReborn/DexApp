@@ -1,4 +1,4 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.models;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dexterlearning.dexapp.R;
+import com.dexterlearning.dexapp.activities.CourseActivity;
 
 /*A course item consists of a card view which contains a linear layout.
 That linear layout houses the imageview and the text you see in the card
@@ -39,7 +42,7 @@ public class CourseCardView extends CardView {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,
-                        com.dexterlearning.dexapp.CourseActivity.class);
+                        CourseActivity.class);
 
                 View rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
                 TextView tvUserName = (TextView) rootView.findViewById(R.id.tvUserName);

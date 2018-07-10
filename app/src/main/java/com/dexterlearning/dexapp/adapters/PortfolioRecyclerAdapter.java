@@ -2,7 +2,7 @@
 http://www.technetexperts.com/mobile/custom-file-explorer-in-android-application-development
 */
 
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.dexterlearning.dexapp.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -116,12 +118,12 @@ public class PortfolioRecyclerAdapter extends RecyclerView.Adapter<PortfolioRecy
         return m_dateFormat.format(m_file.lastModified());
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder
     {
-        CheckBox m_cbCheck;
-        ImageView m_ivIcon;
-        TextView m_tvFileName;
-        TextView m_tvDate;
+        public CheckBox m_cbCheck;
+        public ImageView m_ivIcon;
+        public TextView m_tvFileName;
+        public TextView m_tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);

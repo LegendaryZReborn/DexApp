@@ -1,4 +1,4 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.dexterlearning.dexapp.R;
 
 import java.util.List;
 

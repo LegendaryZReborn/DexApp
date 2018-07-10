@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/subtleGrey"
     android:orientation="vertical"
-    tools:context=".DashboardActivity">
+    tools:context=".activities.DashboardActivity">
 
 
     <android.support.v4.widget.NestedScrollView

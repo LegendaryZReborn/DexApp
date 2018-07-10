@@ -1,10 +1,12 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.activities;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.dexterlearning.dexapp.R;
+import com.dexterlearning.dexapp.fragments.StudentListFragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class StudentsActivity extends AppCompatActivity

@@ -1,14 +1,9 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.dexterlearning.dexapp.R;
+import com.dexterlearning.dexapp.activities.CourseActivity;
 
 
 /**
@@ -74,8 +72,7 @@ public class InstructorCoursesFragment extends Fragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), com.dexterlearning
-                            .dexapp.CourseActivity.class);
+                    Intent intent = new Intent(getActivity(), CourseActivity.class);
                     TextView tvCourseTitle = (TextView) v.findViewById(R.id.tvCourseTitle);
                     String courseTitle = tvCourseTitle.getText().toString();
                     intent.putExtra("courseTitle", courseTitle);

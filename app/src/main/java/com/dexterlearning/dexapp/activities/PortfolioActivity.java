@@ -2,7 +2,7 @@
 http://www.technetexperts.com/mobile/custom-file-explorer-in-android-application-development
 */
 
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.activities;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -24,6 +24,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.dexterlearning.dexapp.R;
+import com.dexterlearning.dexapp.adapters.PortfolioRecyclerAdapter;
 
 import java.io.File;
 import java.io.FileNotFoundException;

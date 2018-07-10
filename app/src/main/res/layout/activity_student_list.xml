@@ -5,18 +5,18 @@
     android:id="@+id/students_activity_port"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentsActivity">
+    tools:context=".activities.StudentsActivity">
 
     <fragment
         android:id="@+id/sl_frag"
-        android:name="com.dexterlearning.dexapp.StudentListFragment"
+        android:name="com.dexterlearning.dexapp.fragments.StudentListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <fragment
         android:id="@+id/sp_frag"
-        android:name="com.dexterlearning.dexapp.StudentProfileFragment"
+        android:name="com.dexterlearning.dexapp.fragments.StudentProfileFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.2" />

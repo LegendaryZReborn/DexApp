@@ -1,4 +1,4 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -11,6 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.dexterlearning.dexapp.R;
+import com.dexterlearning.dexapp.adapters.CustomPagerAdapter;
+import com.dexterlearning.dexapp.fragments.ContentMasterFragment;
+import com.dexterlearning.dexapp.fragments.StudentListFragment;
+import com.dexterlearning.dexapp.fragments.StudentsFragment;
+import com.dexterlearning.dexapp.models.LabeledFragment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -50,19 +57,19 @@ public class CourseActivity extends AppCompatActivity
 
         vpCourseView = (ViewPager) findViewById(R.id.vpCourseView);
         cVAdapter = new CustomPagerAdapter(getSupportFragmentManager());
-        cVAdapter.addFragment(CourseContentFragment.newInstance("Content Fragment"), "Content");
-        cVAdapter.addFragment(CourseContentFragment.newInstance("Notes Fragment"), "Notes");
+        cVAdapter.addFragment(ContentMasterFragment.newInstance("Content Fragment"), "Content");
+        //cVAdapter.addFragment(CourseContentFragment.newInstance("Notes Fragment"), "Notes");
         cVAdapter.addFragment(StudentsFragment.newInstance("Students Fragment"), "Students");
-        cVAdapter.addFragment(CourseContentFragment.newInstance("Forum Fragment"), "Forum");
+        //cVAdapter.addFragment(CourseContentFragment.newInstance("Forum Fragment"), "Forum");
         vpCourseView.setAdapter(cVAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tlDashboardTabs);
         tabLayout.setupWithViewPager(vpCourseView);
 
         createTabIcon("Content", R.drawable.ic_library_books_white_24dp, 0);
-        createTabIcon("Notes", R.drawable.ic_note_white_24dp, 1);
-        createTabIcon("Students", R.drawable.ic_group_white_24dp, 2);
-        createTabIcon("Forum", R.drawable.ic_forum_white_24dp, 3);
+        //createTabIcon("Notes", R.drawable.ic_note_white_24dp, 1);
+        createTabIcon("Students", R.drawable.ic_group_white_24dp, 1);
+       // createTabIcon("Forum", R.drawable.ic_forum_white_24dp, 3);
 
 
     }

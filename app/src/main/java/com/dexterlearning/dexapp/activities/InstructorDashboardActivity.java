@@ -1,9 +1,7 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.dexterlearning.dexapp.adapters.CustomPagerAdapter;
+import com.dexterlearning.dexapp.fragments.InstructorCoursesFragment;
+import com.dexterlearning.dexapp.R;
 
 public class InstructorDashboardActivity extends AppCompatActivity {
 
@@ -35,16 +35,16 @@ public class InstructorDashboardActivity extends AppCompatActivity {
         CustomPagerAdapter dpAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         dpAdapter.addFragment(DemoObjectFragment.newInstance("Home Fragment"), "Home");
         dpAdapter.addFragment(InstructorCoursesFragment.newInstance("Courses Fragment"), "Courses");
-        dpAdapter.addFragment(DemoObjectFragment.newInstance("Random Fragment"), "Random");
-        dpAdapter.addFragment(DemoObjectFragment.newInstance("Settings Fragment"), "Settings");
+        //dpAdapter.addFragment(DemoObjectFragment.newInstance("Help Fragment"), "Help");
+        //dpAdapter.addFragment(DemoObjectFragment.newInstance("Settings Fragment"), "Settings");
         vpDashboard.setAdapter(dpAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tlDashboardTabs);
         tabLayout.setupWithViewPager(vpDashboard);
         createTabIcon("Home", R.drawable.ic_home_white_24dp, 0);
         createTabIcon("Courses", R.drawable.ic_library_books_white_24dp, 1);
-        createTabIcon("Help", R.drawable.ic_help_help_24dp, 2);
-        createTabIcon("Settings", R.drawable.ic_settings_white_24dp, 3);
+        //createTabIcon("Help", R.drawable.ic_help_help_24dp, 2);
+        //createTabIcon("Settings", R.drawable.ic_settings_white_24dp, 3);
     }
 
         private void createTabIcon(String tabTitle, int drawable, int tabIndex) {

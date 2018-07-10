@@ -1,4 +1,4 @@
-package com.dexterlearning.dexapp;
+package com.dexterlearning.dexapp.models;
 
 public class SignedInUser {
     private static final SignedInUser instance = new SignedInUser();
